@@ -1,19 +1,21 @@
-using System;
 using UnityEngine;
 
 namespace PlayerLogic
 {
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(PlayerStats))]
     public class PlayerMovement : MonoBehaviour
     {
         private Joystick _joystick;
-        private CharacterController _characterController;
+        private Rigidbody _rigidbody;
         private PlayerStats _playerStats;
+        
         private Vector3 _moveDirction;
 
 
         private void Awake()
         {
-            _characterController = GetComponent<CharacterController>();
+            _rigidbody = GetComponent<Rigidbody>();
             _playerStats = GetComponent<PlayerStats>();
         }
 
@@ -22,7 +24,7 @@ namespace PlayerLogic
             _joystick = FindObjectOfType<Joystick>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
@@ -30,8 +32,12 @@ namespace PlayerLogic
         private void Move()
         {
             _moveDirction = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
-            Debug.Log(_moveDirction);
-            _characterController.Move(_moveDirction * _playerStats.MoveSpeed * Time.deltaTime);
+            if (_moveDirction.magnitude > 1)
+                _moveDirction.Normalize();
+            _rigidbody.MovePosition(transform.position + _moveDirction * _playerStats.MoveSpeed * Time.fixedDeltaTime);
+            
+            if (_moveDirction != Vector3.zero)
+                transform.forward = _moveDirction;
         }
     }
 }
