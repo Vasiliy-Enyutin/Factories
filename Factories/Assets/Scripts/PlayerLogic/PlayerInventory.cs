@@ -25,7 +25,6 @@ namespace PlayerLogic
         public void AddResource(Transform resource)
         {
             _resources.Add(resource);
-
             CheckFullness();
         }
 

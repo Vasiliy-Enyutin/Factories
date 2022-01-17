@@ -12,6 +12,7 @@ namespace PlayerLogic
         private PlayerStats _playerStats;
         private PlayerInventory _playerInventory;
         private bool _isGrabbing = false;
+        private const float FinalProgress = 1;
 
 
         private void Awake()
@@ -22,22 +23,22 @@ namespace PlayerLogic
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.TryGetComponent(out Resource newResource) && _isGrabbing == false && _playerInventory.IsFull == false)
+            if (other.TryGetComponent(out ExitStorage exitStorage) && exitStorage.IsEmpty == false && _isGrabbing == false 
+                && _playerInventory.IsFull == false)
             {
-                StartCoroutine(GrabRoutine(newResource.transform));
+                StartCoroutine(GrabRoutine(exitStorage.GetResource()));
             }
         }
-
+        
         private IEnumerator GrabRoutine(Transform newResource)
         {
             _isGrabbing = true;
             MoveNewResourcePointUp(newResource);
-            int elapsedFrames = 0;
-            while (elapsedFrames != _playerStats.InterpolationFramesCount)
+            float progress = 0;
+            while (progress <= FinalProgress)
             {
-                float interpolationRatio = (float)elapsedFrames / _playerStats.InterpolationFramesCount;
-                newResource.position = Vector3.Lerp(newResource.position, _newResourcePoint.position, interpolationRatio);
-                elapsedFrames = (elapsedFrames + 1) % (_playerStats.InterpolationFramesCount + 1);
+                newResource.position = Vector3.Lerp(newResource.position, _newResourcePoint.position, progress);
+                progress += Time.deltaTime * _playerStats.GrabSpeed;
                 yield return null;
             }
             newResource.position = _newResourcePoint.position;

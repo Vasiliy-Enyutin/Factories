@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using FactoriesLogic;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ namespace PlayerLogic
         private PlayerStats _playerStats;
         private PlayerInventory _playerInventory;
         private bool _isDropping = false;
+        private const float FinalProgress = 1;
         
         
         private void Awake()
@@ -30,6 +30,7 @@ namespace PlayerLogic
                 if (resource != null)
                 {
                     StartCoroutine(DropRoutine(storage, resource));
+                    MoveNewResourcePointDown(resource);
                     MoveInventoryResourcesDown(resource, droppingResourceIndex);
                 }
             }
@@ -38,21 +39,18 @@ namespace PlayerLogic
         private IEnumerator DropRoutine(EntranceStorage storage, Transform resource)
         {
             _isDropping = true;
-            float resourceColliderY = resource.GetComponent<Collider>().bounds.size.y;
-            Transform cellToMove = storage.GetCell();
-            int elapsedFrames = 0;
-            while (elapsedFrames != _playerStats.InterpolationFramesCount)
+            Cell emptyCell = storage.GetEmptyCell();
+            float progress = 0;
+            while (progress <= FinalProgress)
             {
-                float interpolationRatio = (float)elapsedFrames / _playerStats.InterpolationFramesCount;
-                resource.position = Vector3.Lerp(resource.position, cellToMove.position, interpolationRatio);
-                elapsedFrames = (elapsedFrames + 1) % (_playerStats.InterpolationFramesCount + 1);
+                resource.position = Vector3.Lerp(resource.position, emptyCell.transform.position, progress);
+                progress += Time.deltaTime * _playerStats.DropSpeed;
                 yield return null;
             }
-            resource.position = cellToMove.position;
-            resource.rotation = cellToMove.rotation;
-            resource.SetParent(cellToMove);
-            storage.AddResource(resource);
-            MoveNewResourcePointDown(resource);
+            resource.position = emptyCell.transform.position;
+            resource.rotation = emptyCell.transform.rotation;
+            resource.SetParent(emptyCell.transform);
+            storage.AddResource(resource, emptyCell);
             resource.GetComponent<BoxCollider>().enabled = false;
             _isDropping = false;
         }

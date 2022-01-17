@@ -1,9 +1,6 @@
-using UnityEngine;
-
 namespace FactoriesLogic
 {
-    public class ExitStorage : MonoBehaviour
+    public class ExitStorage : StorageBase
     {
-    
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 611063173}
   m_Layer: 0
-  m_Name: NewResourcePosition
+  m_Name: NewResourcePoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 3
   _inventorySize: 10
-  _interpolationFramesCount: 0
+  _grabSpeed: 2
+  _dropSpeed: 2
 --- !u!114 &110044684579789582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b2ffe28ee4e884980a7994ef1a7130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newResourcePosition: {fileID: 611063173}
+  _newResourcePoint: {fileID: 611063173}
 --- !u!114 &5958157311033533612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43eac68f3cbf8d745952940025a55d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _newResourcePoint: {fileID: 611063173}
 --- !u!114 &1461151943
 MonoBehaviour:
   m_ObjectHideFlags: 0
