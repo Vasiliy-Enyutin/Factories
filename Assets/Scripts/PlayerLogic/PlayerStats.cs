@@ -6,16 +6,16 @@ namespace PlayerLogic
     {
         [SerializeField] private float _moveSpeed;
         [SerializeField] private int _inventorySize;
-        [SerializeField] private float _grabSpeed;
-        [SerializeField] private float _dropSpeed;
+        [SerializeField] private float _grabDuration;
+        [SerializeField] private float _dropDuration;
 
 
         public float MoveSpeed => _moveSpeed;
 
         public int InventorySize => _inventorySize;
 
-        public float GrabSpeed => _grabSpeed;
+        public float GrabDuration => _grabDuration;
         
-        public float DropSpeed => _dropSpeed;
+        public float DropDuration => _dropDuration;
     }
 }

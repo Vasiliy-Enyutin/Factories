@@ -113,8 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 3
   _inventorySize: 10
-  _grabSpeed: 2
-  _dropSpeed: 2
+  _grabDuration: 0.5
+  _dropDuration: 0.5
 --- !u!114 &110044684579789582
 MonoBehaviour:
   m_ObjectHideFlags: 0

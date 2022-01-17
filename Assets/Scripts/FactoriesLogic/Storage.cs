@@ -2,30 +2,35 @@ using UnityEngine;
 
 namespace FactoriesLogic
 {
-    public abstract class StorageBase : MonoBehaviour
+    public class Storage : MonoBehaviour
     {
-        [SerializeField] protected Cell[] _cells;
-        protected int _resourcesNumber = 0;
+        [SerializeField] private StorageType _storageType;
+        [SerializeField] private Cell[] _cells;
+        private int _resourcesNumber = 0;
 
 
+        public ResourceTypes ResourceType { get; set; }
+        
         public bool IsFull { get; private set; }
         
         public bool IsEmpty { get; private set; }
 
+        public StorageType StorageType => _storageType;
 
-        protected virtual void Awake()
+
+        private void Awake()
         {
             CheckFullness();
         }
 
-        public void AddResource(Transform resource, Cell cell)
+        public void AddResource(Resource resource, Cell cell)
         {
             cell.AddResource(resource);
             _resourcesNumber++;
             CheckFullness();
         }
 
-        public Transform GetResource()
+        public Resource GetResource()
         {
             for (int i = 0; i < _cells.Length; i++)
             {
@@ -36,7 +41,7 @@ namespace FactoriesLogic
                     return _cells[i].GetResource();
                 }
             }
-
+            
             return null;
         }
 

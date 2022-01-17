@@ -12,7 +12,6 @@ namespace PlayerLogic
         private PlayerStats _playerStats;
         private PlayerInventory _playerInventory;
         private bool _isGrabbing = false;
-        private const float FinalProgress = 1;
 
 
         private void Awake()
@@ -23,33 +22,30 @@ namespace PlayerLogic
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.TryGetComponent(out ExitStorage exitStorage) && exitStorage.IsEmpty == false && _isGrabbing == false 
-                && _playerInventory.IsFull == false)
+            if (other.TryGetComponent(out Storage exitStorage) && exitStorage.StorageType == StorageType.Exit 
+                && exitStorage.IsEmpty == false && _isGrabbing == false && _playerInventory.IsFull == false)
             {
-                StartCoroutine(GrabRoutine(exitStorage.GetResource()));
+                Resource newResource = exitStorage.GetResource();
+                if (newResource != null)
+                {
+                    StartCoroutine(GrabRoutine(newResource));
+                }
             }
         }
         
-        private IEnumerator GrabRoutine(Transform newResource)
+        private IEnumerator GrabRoutine(Resource newResource)
         {
             _isGrabbing = true;
             MoveNewResourcePointUp(newResource);
-            float progress = 0;
-            while (progress <= FinalProgress)
-            {
-                newResource.position = Vector3.Lerp(newResource.position, _newResourcePoint.position, progress);
-                progress += Time.deltaTime * _playerStats.GrabSpeed;
-                yield return null;
-            }
-            newResource.position = _newResourcePoint.position;
-            newResource.rotation = transform.rotation;
-            newResource.SetParent(transform);
+            newResource.GetComponent<Resource>().RotateInDuration(_playerStats.GrabDuration, _newResourcePoint);
+            yield return newResource.GetComponent<Resource>().MoveInDuration(_playerStats.GrabDuration, _newResourcePoint);
+            newResource.transform.SetParent(transform);
             _playerInventory.AddResource(newResource);
             _isGrabbing = false;
             MoveNewResourcePointUp(newResource);
         }
 
-        private void MoveNewResourcePointUp(Transform newResource)
+        private void MoveNewResourcePointUp(Resource newResource)
         {
             float halfNewResourceColliderY = newResource.GetComponent<BoxCollider>().bounds.extents.y;
             _newResourcePoint.position += new Vector3(0f, halfNewResourceColliderY, 0f);

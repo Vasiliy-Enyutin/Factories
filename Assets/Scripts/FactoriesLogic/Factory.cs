@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,13 +6,23 @@ namespace FactoriesLogic
 {
     public class Factory : MonoBehaviour
     {
+        [SerializeField] private ResourceTypes _entranceResourceType;
+        [SerializeField] private ResourceTypes _exitResourceType;
         [SerializeField] private float _generationTime;
-        [SerializeField] private float _generationSpeed;
-        [SerializeField] private ExitStorage _exitStorage;
-        [SerializeField] private EntranceStorage _entranceStorage;
-        [SerializeField] private GameObject _exitResource;
+        [SerializeField] private float _resourceMoveDuration;
+        [SerializeField] private Storage _entranceStorage;
+        [SerializeField] private Storage _exitStorage;
+        [SerializeField] private Resource _exitResource;
         private bool _isGenerating = false;
-        private const int FinalProgress = 1;
+
+
+        private void Awake()
+        {
+            if (_entranceStorage != null)
+                _entranceStorage.ResourceType = _entranceResourceType;
+            
+            _exitStorage.ResourceType = _exitResourceType;
+        }
 
         private void Update()
         {
@@ -29,32 +40,20 @@ namespace FactoriesLogic
             _isGenerating = true;
             if (_entranceStorage != null)
             {
-                Transform entranceResource = _entranceStorage.GetResource();
-                yield return StartCoroutine(MoveResourceRoutine(entranceResource, transform));
+                Resource entranceResource = _entranceStorage.GetResource();
+                yield return entranceResource.MoveInDuration(_resourceMoveDuration, transform);
                 Destroy(entranceResource.gameObject);
             }
 
             yield return StartCoroutine(GenerateTimer());
-            GameObject resource = Instantiate(_exitResource, transform.position, Quaternion.identity);
+            Resource resource = Instantiate(_exitResource, transform.position, Quaternion.identity);
             Cell emptyCell = _exitStorage.GetEmptyCell();
-            yield return StartCoroutine(MoveResourceRoutine(resource.transform, emptyCell.transform));
-            _exitStorage.AddResource(resource.transform, emptyCell);
+            resource.RotateInDuration(_resourceMoveDuration, emptyCell.transform);
+            yield return resource.MoveInDuration(_resourceMoveDuration, emptyCell.transform);
+            _exitStorage.AddResource(resource, emptyCell);
             _isGenerating = false;
         }
 
-        private IEnumerator MoveResourceRoutine(Transform resource, Transform objectToMove)
-        {
-            float progress = 0f;
-            while (progress <= FinalProgress)
-            {
-                resource.position = Vector3.Lerp(resource.position, objectToMove.position, progress);
-                progress += Time.deltaTime * _generationSpeed;
-                yield return null;
-            }
-            resource.position = objectToMove.position;
-            resource.rotation = objectToMove.rotation;
-        }
-        
         private IEnumerator GenerateTimer()
         {
             yield return new WaitForSeconds(_generationTime);

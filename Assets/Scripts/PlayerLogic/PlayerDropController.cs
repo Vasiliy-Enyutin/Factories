@@ -12,9 +12,8 @@ namespace PlayerLogic
         private PlayerStats _playerStats;
         private PlayerInventory _playerInventory;
         private bool _isDropping = false;
-        private const float FinalProgress = 1;
-        
-        
+
+
         private void Awake()
         {
             _playerInventory = GetComponent<PlayerInventory>();
@@ -23,39 +22,33 @@ namespace PlayerLogic
         
         private void OnTriggerStay(Collider other)
         {
-            if (other.TryGetComponent(out EntranceStorage storage) && _isDropping == false && storage.IsFull == false)
+            if (other.TryGetComponent(out Storage entranceStorage) && _isDropping == false 
+                && entranceStorage.StorageType == StorageType.Entrance && entranceStorage.IsFull == false)
             {
                 int droppingResourceIndex;
-                Transform resource = _playerInventory.PopResourceByType(storage.ResourceType, out droppingResourceIndex);
+                Resource resource = _playerInventory.PopResourceByType(entranceStorage.ResourceType, out droppingResourceIndex);
                 if (resource != null)
                 {
-                    StartCoroutine(DropRoutine(storage, resource));
+                    StartCoroutine(DropRoutine(entranceStorage, resource));
                     MoveNewResourcePointDown(resource);
                     MoveInventoryResourcesDown(resource, droppingResourceIndex);
                 }
             }
         }
 
-        private IEnumerator DropRoutine(EntranceStorage storage, Transform resource)
+        private IEnumerator DropRoutine(Storage entranceStorage, Resource resource)
         {
             _isDropping = true;
-            Cell emptyCell = storage.GetEmptyCell();
-            float progress = 0;
-            while (progress <= FinalProgress)
-            {
-                resource.position = Vector3.Lerp(resource.position, emptyCell.transform.position, progress);
-                progress += Time.deltaTime * _playerStats.DropSpeed;
-                yield return null;
-            }
-            resource.position = emptyCell.transform.position;
-            resource.rotation = emptyCell.transform.rotation;
-            resource.SetParent(emptyCell.transform);
-            storage.AddResource(resource, emptyCell);
+            Cell emptyCell = entranceStorage.GetEmptyCell();
+            resource.RotateInDuration(_playerStats.DropDuration, emptyCell.transform);
+            yield return resource.MoveInDuration(_playerStats.DropDuration, emptyCell.transform);
+            resource.transform.SetParent(emptyCell.transform);
+            entranceStorage.AddResource(resource, emptyCell);
             resource.GetComponent<BoxCollider>().enabled = false;
             _isDropping = false;
         }
         
-        private void MoveInventoryResourcesDown(Transform resource, int droppingResourceIndex)
+        private void MoveInventoryResourcesDown(Resource resource, int droppingResourceIndex)
         {
             float resourceColliderY = resource.GetComponent<Collider>().bounds.size.y;
             for (int i = _playerInventory.Resources.Count - 1; i >= droppingResourceIndex; i--)
@@ -74,7 +67,7 @@ namespace PlayerLogic
                 _playerInventory.Resources[i].transform.position.z);
         }
         
-        private void MoveNewResourcePointDown(Transform resource)
+        private void MoveNewResourcePointDown(Resource resource)
         {
             float resourceColliderY = resource.GetComponent<BoxCollider>().bounds.size.y;
             _newResourcePoint.position -= new Vector3(0, resourceColliderY, 0);

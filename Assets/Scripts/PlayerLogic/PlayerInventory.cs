@@ -7,33 +7,33 @@ namespace PlayerLogic
     [RequireComponent(typeof(PlayerStats))]
     public class PlayerInventory : MonoBehaviour
     {
-        private List<Transform> _resources;
+        private List<Resource> _resources;
         private PlayerStats _playerStats;
 
         
         public bool IsFull { get; private set; }
 
-        public List<Transform> Resources => _resources;
+        public List<Resource> Resources => _resources;
         
 
         private void Awake()
         {
             _playerStats = GetComponent<PlayerStats>();
-            _resources = new List<Transform>(_playerStats.InventorySize);
+            _resources = new List<Resource>(_playerStats.InventorySize);
         }
 
-        public void AddResource(Transform resource)
+        public void AddResource(Resource resource)
         {
             _resources.Add(resource);
             CheckFullness();
         }
 
-        public Transform PopResourceByType(ResourceTypes type, out int resourceIndex)
+        public Resource PopResourceByType(ResourceTypes type, out int resourceIndex)
         {
-            Transform resource;
+            Resource resource;
             for (int i = _resources.Count - 1; i >= 0; i--)
             {
-                if (_resources[i].GetComponent<Resource>().ResourceType == type)
+                if (_resources[i].ResourceType == type)
                 {
                     CheckFullness();
                     resourceIndex = i;

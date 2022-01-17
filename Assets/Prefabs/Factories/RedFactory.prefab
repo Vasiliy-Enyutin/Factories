@@ -77,11 +77,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da60cc501ed864a479e96ffe2a58c1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _exitResourceType: 0
   _generationTime: 2
-  _generationSpeed: 2
-  _exitStorage: {fileID: 536867380}
-  _entranceStorage: {fileID: 6897713856536854581}
-  _exitResource: {fileID: 6519587627285560785, guid: 2d55e200850c99642a9b3ebce5a3723f,
+  _resourceMoveDuration: 0.5
+  _entranceStorage: {fileID: 8727474416975506974}
+  _exitStorage: {fileID: 1540758250933112847}
+  _exitResource: {fileID: 1530895375581009811, guid: 2d55e200850c99642a9b3ebce5a3723f,
     type: 3}
 --- !u!1 &9037239458125809586
 GameObject:
@@ -270,16 +271,16 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2463482210195197057}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6897713856536854581 stripped
+--- !u!114 &8727474416975506974 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9045926460862663860, guid: 1f012110b74313248921781c54818a14,
+  m_CorrespondingSourceObject: {fileID: 6570254573662872223, guid: 1f012110b74313248921781c54818a14,
     type: 3}
   m_PrefabInstance: {fileID: 2463482210195197057}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45045994ab588624ebaf835714ef0993, type: 3}
+  m_Script: {fileID: 11500000, guid: 64de417eebd8b264e948cc80fa7d348a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3906827658203997514 stripped
@@ -392,67 +393,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf542c2da84ecef48b4ea267c77320d4, type: 3}
---- !u!1 &5595689632053115112 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3996837918872984442, guid: cf542c2da84ecef48b4ea267c77320d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 8849710687625208722}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4234665544267793406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4617580619856863340, guid: cf542c2da84ecef48b4ea267c77320d4,
     type: 3}
   m_PrefabInstance: {fileID: 8849710687625208722}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8408075598707257927 stripped
+--- !u!114 &1540758250933112847 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1044554523427967445, guid: cf542c2da84ecef48b4ea267c77320d4,
+  m_CorrespondingSourceObject: {fileID: 8048393834192581533, guid: cf542c2da84ecef48b4ea267c77320d4,
     type: 3}
   m_PrefabInstance: {fileID: 8849710687625208722}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a40eafcbc0c0e6049a60765df0297b01, type: 3}
+  m_Script: {fileID: 11500000, guid: 64de417eebd8b264e948cc80fa7d348a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3493123154969580708 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5380233629723506486, guid: cf542c2da84ecef48b4ea267c77320d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 8849710687625208722}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a40eafcbc0c0e6049a60765df0297b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6305977375547559209 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3266000303052910267, guid: cf542c2da84ecef48b4ea267c77320d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 8849710687625208722}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a40eafcbc0c0e6049a60765df0297b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &536867380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5595689632053115112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c057506633d1848850290c80cfe625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cells:
-  - {fileID: 8408075598707257927}
-  - {fileID: 3493123154969580708}
-  - {fileID: 6305977375547559209}
