@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace FactoriesLogic
+namespace ResourceLogic
 {
     public class Resource : MonoBehaviour
     {
-        [SerializeField] private ResourceTypes _resourceTypes;
+        [SerializeField] private ResourceType resourceType;
 
 
-        public ResourceTypes ResourceType => _resourceTypes;
+        public ResourceType ResourceType => resourceType;
 
         public Coroutine MoveInDuration(float duration, Transform moveTo)
         {

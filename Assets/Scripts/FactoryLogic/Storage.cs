@@ -1,6 +1,8 @@
+using System;
+using ResourceLogic;
 using UnityEngine;
 
-namespace FactoriesLogic
+namespace FactoryLogic
 {
     public class Storage : MonoBehaviour
     {
@@ -8,26 +10,29 @@ namespace FactoriesLogic
         [SerializeField] private Cell[] _cells;
         private int _resourcesNumber = 0;
 
+        public event Action OnStorageChanged;
 
-        public ResourceTypes ResourceType { get; set; }
+
+        public ResourceType ResourceType { get; set; }
+        
+        public StorageType StorageType => _storageType;
         
         public bool IsFull { get; private set; }
         
         public bool IsEmpty { get; private set; }
 
-        public StorageType StorageType => _storageType;
-
 
         private void Awake()
         {
-            CheckFullness();
+            CheckOccupancy();
         }
+
 
         public void AddResource(Resource resource, Cell cell)
         {
             cell.AddResource(resource);
             _resourcesNumber++;
-            CheckFullness();
+            CheckOccupancy();
         }
 
         public Resource GetResource()
@@ -37,7 +42,7 @@ namespace FactoriesLogic
                 if (_cells[i].IsFull == true)
                 {
                     _resourcesNumber--;
-                    CheckFullness();
+                    CheckOccupancy();
                     return _cells[i].GetResource();
                 }
             }
@@ -59,17 +64,19 @@ namespace FactoriesLogic
             return null;
         }
 
-        private void CheckFullness()
+        private void CheckOccupancy()
         {
             if (_resourcesNumber <= 0)
                 IsEmpty = true;
             else
                 IsEmpty = false;
-
+            
             if (_resourcesNumber >= _cells.Length)
                 IsFull = true;
             else
                 IsFull = false;
+            
+            OnStorageChanged?.Invoke();
         }
     }
 }

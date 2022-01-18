@@ -1,6 +1,6 @@
-namespace FactoriesLogic
+namespace ResourceLogic
 {
-    public enum ResourceTypes
+    public enum ResourceType
     {
         blue,
         Green,

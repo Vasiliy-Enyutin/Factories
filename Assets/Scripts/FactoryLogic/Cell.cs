@@ -1,6 +1,7 @@
+using ResourceLogic;
 using UnityEngine;
 
-namespace FactoriesLogic
+namespace FactoryLogic
 {
     public class Cell : MonoBehaviour
     {

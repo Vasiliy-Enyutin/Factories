@@ -1,13 +1,13 @@
-using System;
 using System.Collections;
+using ResourceLogic;
 using UnityEngine;
 
-namespace FactoriesLogic
+namespace FactoryLogic
 {
     public class Factory : MonoBehaviour
     {
-        [SerializeField] private ResourceTypes _entranceResourceType;
-        [SerializeField] private ResourceTypes _exitResourceType;
+        [SerializeField] private ResourceType _entranceResourceType;
+        [SerializeField] private ResourceType _exitResourceType;
         [SerializeField] private float _generationTime;
         [SerializeField] private float _resourceMoveDuration;
         [SerializeField] private Storage _entranceStorage;
@@ -16,12 +16,33 @@ namespace FactoriesLogic
         private bool _isGenerating = false;
 
 
+        public Transform EntranceStorateEmptyPopupText { get; set; }
+        
+        public Transform ExitStorageFullPopupText { get; set; }
+
+
         private void Awake()
         {
             if (_entranceStorage != null)
                 _entranceStorage.ResourceType = _entranceResourceType;
             
             _exitStorage.ResourceType = _exitResourceType;
+        }
+        
+        private void OnEnable()
+        {
+            if (_entranceStorage != null)
+                _entranceStorage.OnStorageChanged += ReportEntranceStorageOccupancy;
+            
+            _exitStorage.OnStorageChanged += ReportExitStorageOccupancy;
+        }
+
+        private void OnDisable()
+        {
+            if (_entranceStorage != null)
+                _entranceStorage.OnStorageChanged -= ReportEntranceStorageOccupancy;
+            
+            _exitStorage.OnStorageChanged -= ReportExitStorageOccupancy;
         }
 
         private void Update()
@@ -57,6 +78,22 @@ namespace FactoriesLogic
         private IEnumerator GenerateTimer()
         {
             yield return new WaitForSeconds(_generationTime);
+        }
+
+        private void ReportEntranceStorageOccupancy()
+        {
+            if (_entranceStorage.IsEmpty == true)
+                FactoryStorageOccupancyEventBrocker.InvokeEntranceStorageEmpty(this);
+            else
+                FactoryStorageOccupancyEventBrocker.InvokeEntranceStorageNotEmpty(this);
+        }
+        
+        private void ReportExitStorageOccupancy()
+        {
+            if (_exitStorage.IsFull == true)
+                FactoryStorageOccupancyEventBrocker.InvokeExitStorageFull(this);
+            else
+                FactoryStorageOccupancyEventBrocker.InvokeExitStorageNotFull(this);
         }
     }
 }

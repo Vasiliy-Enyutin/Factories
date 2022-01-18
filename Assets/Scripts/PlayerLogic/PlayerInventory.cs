@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FactoriesLogic;
+using ResourceLogic;
 using UnityEngine;
 
 namespace PlayerLogic
@@ -28,7 +28,7 @@ namespace PlayerLogic
             CheckFullness();
         }
 
-        public Resource PopResourceByType(ResourceTypes type, out int resourceIndex)
+        public Resource PopResourceByType(ResourceType type, out int resourceIndex)
         {
             Resource resource;
             for (int i = _resources.Count - 1; i >= 0; i--)

@@ -1,5 +1,6 @@
 using System.Collections;
-using FactoriesLogic;
+using FactoryLogic;
+using ResourceLogic;
 using UnityEngine;
 
 namespace PlayerLogic

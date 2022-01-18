@@ -1,4 +1,4 @@
-﻿namespace FactoriesLogic
+﻿namespace FactoryLogic
 {
     public enum StorageType
     {
