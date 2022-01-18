@@ -22,7 +22,7 @@ namespace FactoryLogic
         public bool IsEmpty { get; private set; }
 
 
-        private void Awake()
+        private void Start()
         {
             CheckOccupancy();
         }
@@ -75,7 +75,7 @@ namespace FactoryLogic
                 IsFull = true;
             else
                 IsFull = false;
-            
+
             OnStorageChanged?.Invoke();
         }
     }

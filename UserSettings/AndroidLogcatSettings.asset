@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "f81ceba4",
         "name": "com.DefaultCompany.Factories",
-        "processId": 7213,
+        "processId": 3054,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -66,6 +66,12 @@
             "deviceId": "f81ceba4",
             "name": "com.DefaultCompany.Factories",
             "processId": 7213,
+            "exited": false
+        },
+        {
+            "deviceId": "f81ceba4",
+            "name": "com.DefaultCompany.Factories",
+            "processId": 3054,
             "exited": false
         }
     ],

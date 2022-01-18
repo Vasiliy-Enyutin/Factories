@@ -991,10 +991,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1990069575, guid: 2f498ffbc90c09b48864cca15da8f066, type: 3}
-      propertyPath: _entranceResourceType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 9037239457883860416, guid: 2f498ffbc90c09b48864cca15da8f066,
         type: 3}
       propertyPath: m_RootOrder
@@ -1206,10 +1202,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 286976603, guid: 32f3cf7fb84d2a44591af2f612e7682d, type: 3}
-      propertyPath: _entranceResourceType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5931615448328861433, guid: 32f3cf7fb84d2a44591af2f612e7682d,
         type: 3}
       propertyPath: m_Name

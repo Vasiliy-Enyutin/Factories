@@ -25,7 +25,7 @@ namespace FactoryLogic
         {
             if (_entranceStorage != null)
                 _entranceStorage.ResourceType = _entranceResourceType;
-            
+
             _exitStorage.ResourceType = _exitResourceType;
         }
         
@@ -33,7 +33,7 @@ namespace FactoryLogic
         {
             if (_entranceStorage != null)
                 _entranceStorage.OnStorageChanged += ReportEntranceStorageOccupancy;
-            
+
             _exitStorage.OnStorageChanged += ReportExitStorageOccupancy;
         }
 
