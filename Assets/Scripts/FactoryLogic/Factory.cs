@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ResourceLogic;
 using UnityEngine;
@@ -14,18 +15,17 @@ namespace FactoryLogic
         [SerializeField] private Storage _exitStorage;
         [SerializeField] private Resource _exitResource;
         private bool _isGenerating = false;
-
-
-        public Transform EntranceStorateEmptyPopupText { get; set; }
         
-        public Transform ExitStorageFullPopupText { get; set; }
-
+        public event Action OnEntranceStorageNotEmpty;
+        public event Action OnExitStorageNotFull;
+        public event Action<Factory> OnEntranceStorageEmpty;
+        public event Action<Factory> OnExitStorageFull;
 
         private void Awake()
         {
             if (_entranceStorage != null)
                 _entranceStorage.ResourceType = _entranceResourceType;
-
+            
             _exitStorage.ResourceType = _exitResourceType;
         }
         
@@ -33,7 +33,7 @@ namespace FactoryLogic
         {
             if (_entranceStorage != null)
                 _entranceStorage.OnStorageChanged += ReportEntranceStorageOccupancy;
-
+            
             _exitStorage.OnStorageChanged += ReportExitStorageOccupancy;
         }
 
@@ -83,17 +83,17 @@ namespace FactoryLogic
         private void ReportEntranceStorageOccupancy()
         {
             if (_entranceStorage.IsEmpty == true)
-                FactoryStorageOccupancyEventBrocker.InvokeEntranceStorageEmpty(this);
+                OnEntranceStorageEmpty?.Invoke(this);
             else
-                FactoryStorageOccupancyEventBrocker.InvokeEntranceStorageNotEmpty(this);
+                OnEntranceStorageNotEmpty?.Invoke();
         }
         
         private void ReportExitStorageOccupancy()
         {
             if (_exitStorage.IsFull == true)
-                FactoryStorageOccupancyEventBrocker.InvokeExitStorageFull(this);
+                OnExitStorageFull?.Invoke(this);
             else
-                FactoryStorageOccupancyEventBrocker.InvokeExitStorageNotFull(this);
+                OnExitStorageNotFull?.Invoke();
         }
     }
 }

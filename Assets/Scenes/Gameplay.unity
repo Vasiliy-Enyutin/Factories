@@ -381,9 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4381e3c6b17074ea317d5eabb2d05f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entranceStorageIsEmptyPopupTextPrefab: {fileID: 4561380601066530328, guid: 6bbb1fcf6fd71b84dbba39b5097d03c7,
+  _entranceStorageIsEmptyPopupTextPrefab: {fileID: 3245554963243928281, guid: 6bbb1fcf6fd71b84dbba39b5097d03c7,
     type: 3}
-  _exitStorageIsFullPopupTextPrefab: {fileID: 3116146899319088724, guid: 824d819bc09f11640b75952ce3ec2fa1,
+  _exitStorageIsFullPopupTextPrefab: {fileID: 928545113079812774, guid: 824d819bc09f11640b75952ce3ec2fa1,
     type: 3}
   _entranceStorageIsEmptyMessageOffset: {x: 0, y: 3, z: 0}
   _exitStorageIsFullMessageOffset: {x: 0, y: 5, z: 0}
